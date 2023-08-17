@@ -28,3 +28,27 @@ dog_menu <- function(enter_dog_name) {
 
 dog_menu("d")
 ```
+
+## Function with a for loop
+
+Plan:
+
+-   iterate over each column
+
+-   calculate mean value for each column
+
+-   store them
+
+```{r}
+df_means <- function(df) {
+  for (i in seq_along(df)) {
+    col_mean <- round(mean(df[[i]], na.rm = TRUE)) # return rounded MEANS of the vector of values [[]] from the column 
+    column_name <- colnames(df[i]) # access column name of selected column i
+    print(paste("The mean value of", column_name, "is", col_mean))
+  }
+}
+
+df <- mtcars
+
+df_means(mtcars)
+```
