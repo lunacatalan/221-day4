@@ -4,11 +4,7 @@ format: html
 editor: visual
 ---
 
-<<<<<<< HEAD
-## Functions
-=======
-## Functions 
->>>>>>> 2b0277bb38618df17f7d9f1da362535011274733
+
 
 ```{r}
 double_value <- function(my_dollars) {
