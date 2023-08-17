@@ -52,3 +52,143 @@ df <- mtcars
 
 df_means(mtcars)
 ```
+
+## Add warnings
+
+Calculate the betz limit (max amount of power that can be removed from wind). Add warning!
+
+Formula: 0.3 x Density kg/m\^3 x Radius (m) x velocity\^3 (m/s) = power (watts)
+
+**Create function:**
+
+```{r}
+calculate_betz_windpower <- function(air_density, 
+                                     rotor_radius, 
+                                     wind_v) {
+  
+  if (wind_v > 130) {
+    warning("Whoa, thats a pretty high wind speed. Are you sure?")
+  }
+  
+  if (rotor_radius < 0) {
+    stop("Rotor radius must be a positive value (meters)")
+  }
+  
+  0.3 * air_density * pi * (rotor_radius ^ 2) * (wind_v ^ 3)
+}
+```
+
+**Use function:**
+
+```{r}
+calculate_betz_windpower(air_density = 1.2,
+                         rotor_radius = 2,
+                         wind_v = 1000)
+```
+
+## Task 1
+
+Create two sequences, one called `weekdays` that contains days of the week (\"Monday\", \"Tuesday\", \"Wednesday\", etc.) and one called `transects` that contains the series of transect names \"Transect A\", \"Transect B,\"Transect C\". Write a nested for loop that creates a matrix containing the following:
+
+```{r}
+weekdays <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+
+transects <- c("Transect A", "Transect B", "Transect C")
+
+task_matrix <- matrix(ncol = length(transects), nrow = length(weekdays))
+
+for (i in seq_along(weekdays)) {
+  for (j in seq_along(transects)) {
+    week_tran <- paste(weekdays[i], "-", transects[j])
+    task_matrix[i, j] <- week_tran
+  }
+}
+```
+
+## Task 2
+
+Write a function called `force` that calculates a force (in Newtons), given inputs of mass (in kg) and acceleration (in ms2��2 (recall: F=ma�=��), and returns a statement \"The resulting force is \_\_\_ Newtons.\"
+
+```{r}
+force <- function(mass_kg, acceleration_m_s2) {
+  f_n <- mass_kg * acceleration_m_s2
+  print(paste0("The resulting force is ", f_n, " Newtons."))
+}
+```
+
+## Task 3
+
+The length:weight relationship for fish is: W=aLb�=���, where where L is total fish length (centimeters), W is the expected fish weight (grams), and a and b are species-dependent parameter values (shown below for several fish from Peyton et al. 2016).
+
+Recreate the table above as a data frame stored as `fish_parms`. Then, write a function called `fish_weight` that allows a user to only enter the *common name* (argument `fish_name`) and *total length* (argument `tot_length`) (in centimeters) of a fish, to return the expected fish weight in grams. Test it out for different species and lengths.
+
+```{r}
+fish_parms <- data.frame(sci_name = c("Chanos chanos", "Sphyraena barracuda", "Caranx ignobilis"),
+                         common_name = c("Milkfish", "Great barracuda", "	Giant trevally"),
+                         a_est = c(0.0905, 0.0181, 	0.0353),
+                         b_est = c(2.52, 3.27, 3.05))
+```
+
+```{r}
+fish_weight <- function(common_name, tot_length) {
+  for (i in seq_along(common_name)) {
+    expected_f_w <- fish_parms$a_est[[i]] * (tot_length ^ fish_parms$b_est[[i]])
+    print(paste(common_name, "weighs", expected_f_w))
+  }
+}
+
+fish_weight("Milkfish", 4)
+```
+
+Now, try creating a vector of lengths (e.g. 0 to 100, by increments of 1) and ensuring that your function will calculate the fish weight over a *range* of lengths for the given species (try this for milkfish, storing the output weights as `milkfish_weights`.
+
+```{r}
+length_range <- seq(from = 0, to = 100, by = 1)
+
+fish_weight_2 <- function(fish_name, tot_length) {
+  my_subset <- filter(fish_parms, common_name == fish_name)
+  print(my_subset$a_est * (tot_length^my_subset$b_est))
+}
+
+milkfish_weights <- fish_weight_2("Milkfish", length_range)
+
+```
+
+## Task 4
+
+Write a function called `wave_power` that calculates potential ocean wave power given inputs of wave height and period.
+
+```{r}
+wave_power <- function(wave_height, w_period) {
+  0.5 * (wave_height ^ 2) * w_period
+}
+```
+
+Use your `wave_power` function to approximate wave power for a period of 8 seconds, over a range of wave heights from 0 to 3 meters by increments of 0.2 meters.
+
+```{r}
+height_range <- seq(from = 0, to = 3, by = 0.2)
+
+wave_power(height_range, 8)
+```
+
+## Task 5
+
+The wave energy equation changes based on ocean depth. Along the coast of Brenville, which has a very sharp shelf as the wave approaches the coast, wave energy is approximated using the deep ocean equation (the one you used above) for depths \> 12 meters, and a shallow equation for depths \<= 12 meters. The Brenville team estimates shallow wave power by:
+
+```{r}
+
+brenville_wave_power <- function(water_depth, wave_height, w_period) {
+  if (water_depth > 12) {
+    message("Deep water equation was used!")
+    wave_power_d <- 0.5 * (wave_height ^ 2) * w_period
+    print(wave_power_d)
+  } else if (water_depth <= 12) {
+    message("Shallow water equation was used!")
+    wave_power_s <- 0.81 * (wave_height ^ 2) * w_period
+    print(wave_power_s)
+  }
+}
+
+brenville_wave_power(14, 2, 5)
+```
