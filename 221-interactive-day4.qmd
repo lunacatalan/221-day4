@@ -1,0 +1,30 @@
+---
+title: "Day 4 Interactive"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+```
+
+## More functions
+
+Create a subset within a function, and then return something based on that subset.
+
+```{r}
+
+dog_choice <- data.frame(dog_name = c("a", "b", "c", "d", "e"),
+                         food = c("all", "salmon", "pans", "chicks", "dudes"))
+```
+
+Make a function
+
+```{r}
+dog_menu <- function(enter_dog_name) {
+  selected_dog <- filter(dog_choice, dog_name == enter_dog_name) # create subset to create input row
+  print(paste("My name is", selected_dog$dog_name))
+}
+
+dog_menu("d")
+```
