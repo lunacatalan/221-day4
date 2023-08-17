@@ -1,0 +1,59 @@
+---
+title: "Day 4 Interactive"
+format: html
+editor: visual
+---
+
+## Functions 
+
+```{r}
+double_value <- function(my_dollars) {
+  print(2 * my_dollars)
+}
+```
+
+```{r}
+double_value(13.4)
+
+monthly_income <- c(42.5, 61.75, 89.5)
+
+double_value(monthly_income)
+```
+
+**Example 1**
+
+Create a function that returns an awesome restaurant name given a cool animal and your favorite food.
+
+```{r}
+
+restaurant_name <- function(animal, food) {
+  print(paste0(animal, food))
+}
+
+restaurant_name("tiger", "Apples")
+```
+
+**Example 2**
+
+Given temp in degrees F, write a function that converts it to Celsius.
+
+```{r}
+f_to_c <- function(f_temp) {
+  print((f_temp - 39) * (5/9))
+}
+
+f_to_c(50)
+```
+
+**Example 3**
+
+Create a function that given inputs of age and hometowns, return "I am \_\_ years old, and I'm from \_\_\_"
+
+```{r}
+
+home_town <- function(age, town) {
+  print(paste("I am", age, "years old, and I'm from", town))
+}
+
+home_town(13, "NYC")
+```
