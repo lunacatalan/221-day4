@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-## Functions 
+
 
 ```{r}
 double_value <- function(my_dollars) {
