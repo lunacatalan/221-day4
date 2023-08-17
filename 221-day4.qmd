@@ -57,3 +57,48 @@ home_town <- function(age, town) {
 
 home_town(13, "NYC")
 ```
+
+## Function with conditionals
+
+**Example 1**
+
+```{r}
+calculate_animal_age <- function(species, age_human_yrs) {
+  if (species == "dog") {
+    age_human_yrs * 7
+  } else if (species == "goat") {
+    age_human_yrs * 4.7
+  }
+}
+
+# to break it
+calculate_animal_age("whale", 7)
+
+# solution - add another else condition 
+calculate_animal_age <- function(species, age_human_yrs) {
+  if (species == "dog") {
+    age_human_yrs * 7
+  } else if (species == "goat") {
+    age_human_yrs * 4.7
+  } else print("Please enter goat or dog!")
+}
+
+calculate_animal_age("whale", 7)
+```
+
+**Example 2**
+
+Write a function that will return, given temp in Kelvin, if a user selects "metric" to the scale then return degrees C, or if they select "english" then return degrees in F.
+
+```{r}
+
+convert_kelvin_to_f_c <- function(temp_kelvin, scale) {
+  if (scale == "metric") {
+    print(temp_kelvin - 273.15)
+} else if (scale == "english") {
+    print((temp_kelvin - 273.15) * 9/5 + 32)
+  }
+}
+
+convert_kelvin_to_f_c(50, "metric")
+```
